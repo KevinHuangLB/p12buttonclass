@@ -4,6 +4,8 @@ class Button {
   boolean clicked;
   color highlight, normal;
   String text;
+  PImage image;
+  boolean isImage;
 
   Button(String t, int _x, int _y, int _w, int _h, color norm, color high) {
     x = _x;
@@ -14,6 +16,19 @@ class Button {
     highlight = high;
     normal = norm;
     clicked = false;
+    isImage = false;
+  }
+
+  Button(PImage i, int _x, int _y, int _w, int _h, color norm, color high) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    image = i;
+    highlight = high;
+    normal = norm;
+    clicked = false;
+    isImage = true;
   }
 
   void show() {
@@ -43,7 +58,7 @@ class Button {
     strokeWeight(4);
     rect(x, y, w, h, 30);
   }
-  
+
   void drawLabel() {
     textAlign(CENTER, CENTER);
     if (touchingMouse()) {
@@ -52,9 +67,14 @@ class Button {
       fill(highlight);
     }
     textSize(w/4);
-    text(text, x, y);
+
+    if (isImage) {
+      image(dog, x - w/4, y - h/3, w/3, w/3);
+    } else {
+      text(text, x, y);
+    }
   }
-  
+
   void checkForClick() {
     if (mouseReleased && touchingMouse()) {
       clicked = true;
